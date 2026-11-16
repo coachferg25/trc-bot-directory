@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TRC Coaching Co Bot Directory</title>
+  <meta name="description" content="A free, coach-focused directory of Grok bots, sorted by sport. Built by TRC Coaching Co (@CoachFerg25).">
+  <link rel="canonical" href="https://coachferg25.github.io/trc-bot-directory/">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TRC Coaching Co">
+  <meta property="og:title" content="TRC Coaching Co Bot Directory">
+  <meta property="og:description" content="A free, coach-focused directory of Grok bots, sorted by sport. Built by TRC Coaching Co (@CoachFerg25).">
+  <meta property="og:url" content="https://coachferg25.github.io/trc-bot-directory/">
+  <meta property="og:image" content="https://coachferg25.github.io/trc-bot-directory/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TRC Coaching Co Bot Directory: Find a Grok Bot that helps your staff">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CoachFerg25">
+  <meta name="twitter:title" content="TRC Coaching Co Bot Directory">
+  <meta name="twitter:description" content="A free, coach-focused directory of Grok bots, sorted by sport. Built by TRC Coaching Co (@CoachFerg25).">
+  <meta name="twitter:image" content="https://coachferg25.github.io/trc-bot-directory/og-image.png">
+  <meta name="theme-color" content="#0B0B0B">
+  <style>
+    :root {
+      --bg: #0E0E0E;
+      --bg2: #141414;
+      --panel: #1C1C1C;
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #F5F5F5;
+      --muted: #B0B0B0;
+      --red: #C41E24;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #0B0B0B;
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+    }
+    a { color: var(--red); }
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 2px;
+    }
+    .page {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0B0B0B 0%, #0E0E0E 55%, #1A0A0B 100%);
+      padding: clamp(16px, 3vw, 32px);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--red);
+      font-weight: 700;
+      margin: 0;
+    }
+    h1 {
+      font-size: clamp(28px, 5.5vw, 44px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      margin: 6px 0 10px 0;
+    }
+    .lede {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 720px;
+    }
+    .controls { display: flex; flex-direction: column; gap: 12px; }
+    .search-label { display: flex; flex-direction: column; gap: 6px; }
+    input[type="search"] {
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--text);
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 14px;
+      outline: none;
+      width: 100%;
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+    }
+    .chip[aria-selected="true"] {
+      background: var(--red);
+      color: #F5F5F5;
+      border-color: var(--red);
+    }
+    .card, .bot-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+    }
+    .note {
+      background: #201010;
+      border-color: rgba(196, 30, 36, 0.45);
+    }
+    .note p, .count, .soon-intro, .footer p, .bot-card .blurb, .nolink {
+      margin: 0;
+    }
+    .note p { font-size: 14px; line-height: 1.55; color: var(--text); }
+    .count { color: var(--muted); font-size: 13px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .soon { display: flex; flex-direction: column; gap: 12px; }
+    .soon h2 { font-size: 12px; margin: 0 0 6px 0; }
+    .soon-intro { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .bot-card.featured {
+      background: #201010;
+      border: 1px solid rgba(196, 30, 36, 0.5);
+    }
+    .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      box-sizing: border-box;
+    }
+    .bot-card h3 {
+      margin: 0 0 4px 0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    .maker { margin: 0; font-size: 12px; color: var(--red); font-weight: 700; }
+    .blurb { font-size: 14px; line-height: 1.55; color: var(--text); flex: 1 1 auto; }
+    .actions { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+    .get-bot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #F5F5F5;
+      background: var(--red);
+      border-radius: 9px;
+      padding: 10px 12px;
+    }
+    .also { color: var(--muted); font-size: 12px; text-decoration: none; }
+    .nolink { margin: 4px 0 0 0; font-size: 12px; color: var(--muted); }
+    footer {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    footer .cta { font-size: 14px; line-height: 1.55; color: var(--text); }
+    footer .cta a { color: var(--red); font-weight: 700; text-decoration: none; }
+    footer .meta { color: var(--muted); font-size: 12px; line-height: 1.5; }
+    footer .built { color: var(--muted); font-size: 12px; line-height: 1.5; }
+    footer .built a { color: var(--red); font-weight: 700; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="label">TRC Coaching Co</p>
+      <h1>Find a Grok Bot that helps your staff</h1>
+      <p class="lede">A coach-focused directory from Clay Ferguson, a Texas high school football coach. Browse by sport. Job tags on each card show what the bot does. Built for football coaches, and useful for other coaches, athletic directors, and teachers looking for a Grok Bot that does a real job.</p>
+    </header>
+
+    <div class="controls">
+      <label class="search-label">
+        <span class="label" style="color: var(--muted)">Search</span>
+        <input type="search" id="search" placeholder="Search by name, maker, sport, or job…" aria-label="Search bots by name, maker, sport, or job">
+      </label>
+      <div class="tabs" role="tablist" aria-label="Sports" id="tabs"></div>
+    </div>
+
+    <div id="betting-note" class="card note" hidden>
+      <div class="label">Betting/Fantasy</div>
+      <p>Bet responsibly, 21+ where legal. These bots research cards and opinions only. They do not place bets, and they are not a guarantee. If gambling is a problem, call 1-800-GAMBLER.</p>
+    </div>
+
+    <p class="count" id="count"></p>
+    <div class="grid" id="live-grid"></div>
+    <section class="soon" id="soon-section" hidden>
+      <div>
+        <h2 class="label">Coming soon from TRC Coaching Co</h2>
+        <p class="soon-intro">These are in the works. There are no links or prices yet.</p>
+      </div>
+      <div class="grid" id="soon-grid"></div>
+    </section>
+
+    <footer>
+      <p class="cta">Know a football, sports, or classroom Grok Bot that should be here? Mention <a href="https://x.com/CoachFerg25" target="_blank" rel="noopener noreferrer">@CoachFerg25</a> on X and tell us the name and listing link.</p>
+      <p class="built">Built by TRC Coaching Co (<a href="https://x.com/CoachFerg25" target="_blank" rel="noopener noreferrer">@CoachFerg25</a>).</p>
+      <p class="meta">Listings were checked on Nov 11, 2026, America/Chicago. This page is a starting directory, not an official xAI marketplace, and it does not rate or endorse results.</p>
+    </footer>
+  </div>
+  <script>
+    const TAB_DEFS = [
+      { id: "all", label: "All" },
+      { id: "football", label: "Football" },
+      { id: "track", label: "Track & running" },
+      { id: "rodeo", label: "Rodeo" },
+      { id: "golf", label: "Golf" },
+      { id: "baseball", label: "Baseball/Softball" },
+      { id: "basketball", label: "Basketball" },
+      { id: "volleyball", label: "Volleyball" },
+      { id: "soccer", label: "Soccer" },
+      { id: "pickleball", label: "Pickleball" },
+      { id: "hockey", label: "Hockey" },
+      { id: "allsports", label: "All sports" },
+      { id: "betfant", label: "Betting/Fantasy" },
+      { id: "soon", label: "Coming soon" }
+    ];
+    const JOB_LABEL = {
+      play: "Play calling",
+      practice: "Practice",
+      training: "Training",
+      fantasy: "Fantasy",
+      betting: "Betting",
+      team: "Team management",
+      recruiting: "Recruiting",
+      film: "Film",
+      alerts: "Alerts",
+      rules: "Rules"
+    };
+    const TAB_LABEL = Object.fromEntries(TAB_DEFS.map((t) => [t.id, t.label]));
+    const BOTS = [{"name":"Run Game Coach","maker":"Clay Ferguson","blurb":"Studies an NFL team's run game (49ers by default) from film breakdowns on X and turns it into a playbook with blocking rules vs odd and even fronts, then keeps it updated all season. Built for football coaches.","href":"https://grokbotsdirectory.com/bots/run-game-coach-pVZyMp","also":"https://botshelf.dev/templates/05f04527c721/","tabs":["football"],"jobs":["play","film"],"featured":true,"trc":true},{"name":"Opponent Scouting Report Assistant","maker":"TemplatesGrokBot","blurb":"Builds a game-ready scouting report on your next opponent from recent stats and tagged clips. Claims stay tied to the evidence, and nothing goes to players until the coach approves it.","href":"https://templatesgrokbot.com/bot/opponent-scouting-report-assistant","tabs":["football"],"jobs":["play","film"]},{"name":"Game Film Tagging Assistant","maker":"TemplatesGrokBot","blurb":"Turns each game's film and stat sheet into a verified tag set and a ranked teaching-clip list for the next film session. The coach approves the playlist before the team sees it.","href":"https://templatesgrokbot.com/bot/game-film-tagging-assistant","tabs":["football"],"jobs":["film","practice"]},{"name":"Game Strategy Simulator","maker":"TemplatesGrokBot","blurb":"Walks a described game situation through play-calling, clock management, substitutions, and risk/reward what-ifs. It works only from the details you give it, not live scores.","href":"https://templatesgrokbot.com/bot/game-strategy-simulator/","tabs":["football","allsports"],"jobs":["play"]},{"name":"College Recruiting Profile Assistant","maker":"TemplatesGrokBot","blurb":"Builds a verified athlete profile and a dated college contact plan for counselor approval. It does not invent stats or send anything to a college coach until the coach and athlete approve it.","href":"https://templatesgrokbot.com/bot/college-recruiting-profile-assistant","tabs":["football","allsports"],"jobs":["recruiting"]},{"name":"CFB Recruiting & Portal Tracker","maker":"@DB_DevilDog","blurb":"A daily college football digest for any team: commits, flips, signings, portal moves, and polls, with confirmed news kept apart from buzz.","href":"https://meetmybot.ai/bots/cfb-recruiting-portal-tracker","tabs":["football"],"jobs":["recruiting"]},{"name":"Highlight Reel Scripter","maker":"TemplatesGrokBot","blurb":"Creates shot lists and platform-specific cuts for sports highlight videos from the game details and timestamps you provide. It does not edit or post the video itself.","href":"https://templatesgrokbot.com/bot/highlight-reel-scripter","tabs":["football","allsports"],"jobs":["film"]},{"name":"Playbook Installation Progress Tracker","maker":"TemplatesGrokBot","blurb":"Tracks play installation progress by player and play, then drafts a revised practice plan so the team is secure in current plays before new ones are added. Practice-plan changes wait for the coach's approval.","href":"https://templatesgrokbot.com/bot/playbook-installation-progress-tracker","tabs":["football"],"jobs":["practice"]},{"name":"Practice Plan Creator","maker":"TemplatesGrokBot","blurb":"Turns a coach's or athlete's goals into a structured session with warm-up, skill work, scrimmage, and cool-down, including drill descriptions and timing. The plan is a suggestion until the coach approves it.","href":"https://templatesgrokbot.com/bot/practice-plan-creator/","tabs":["allsports"],"jobs":["practice"]},{"name":"Team Manager Desk","maker":"Mike","blurb":"A private team-manager desk for one season: roster, schedule, practice plans, fair game-day rotations with a playing-time tracker, family message drafts, a duty rota, and a season wrap. Youth-safe by default; it never sends or posts without your yes.","href":"https://grokbotsdirectory.com/bots/team-manager-desk-5wzrY3","tabs":["allsports"],"jobs":["team"]},{"name":"Sports Season Organizer","maker":"Kevin McDonald","blurb":"Organizes a kid's or team's sports season: schedule, snack and carpool rotations, gear checklists, and game-day reminders for parents and coaches.","href":"https://grokbotsdirectory.com/bots/sports-season-organizer-3qlEzp","tabs":["allsports"],"jobs":["team"]},{"name":"Duke","maker":"@jxn_w","blurb":"A blunt old-school fantasy football coach for waiver and FAAB picks, trade targets, start/sit calls, and injury news across the major league platforms.","href":"https://meetmybot.ai/bots/duke","tabs":["football","betfant"],"jobs":["fantasy"]},{"name":"Fantasy Football Coach","maker":"Daniel Graham","blurb":"A fantasy football coach for start/sit calls, best lineups, waiver-wire targets with FAAB bids, and FanDuel/DraftKings DFS lineups, all checked against live injury news.","href":"https://grokbotsdirectory.com/bots/fantasy-football-coach-pOKZxp","tabs":["football","betfant"],"jobs":["fantasy"]},{"name":"Coach","maker":"Chris Richards","blurb":"A sport coach for any athlete: pick a sport and goal, then get best-practice plans and honest load and recovery calls. Optional watch data (COROS, Garmin, and others) and daily check-ins.","href":"https://builder.grokbot.rocks/bot/6Z5qMNahOtmaSBjcM6_h6/","also":"https://botshelf.dev/templates/8507525d8fd2/","tabs":["allsports"],"jobs":["training"]},{"name":"Coach G","maker":"Mike Yeager","blurb":"A setup-first fitness coach. It walks you through piping in wearable data, then a daily brief for your sport, then a living training plan that updates when your schedule changes.","href":"https://botshelf.dev/templates/75f5879adc4d/","tabs":["allsports"],"jobs":["training"]},{"name":"Training Load Monitor","maker":"TemplatesGrokBot","blurb":"Tracks each athlete's weekly training load, flags spikes or repeated poor wellness, and suggests adjustments. Every change waits for the coach's approval.","href":"https://templatesgrokbot.com/bot/training-load-monitor","tabs":["allsports"],"jobs":["training"]},{"name":"Head Coach","maker":"Raphael","blurb":"A sprint coach for track athletes. Every night it sends tomorrow's session from your coach's posted plan and logs your results in a weekly training page.","href":"https://grokbotsdirectory.com/bots/head-coach-pBEe68","tabs":["track"],"jobs":["training"]},{"name":"Running Coach","maker":"Martin Ebert","blurb":"A running coach for hobby runners chasing personal bests. It reads your runs from Strava, builds a season plan with target times and pace zones, watches race registration deadlines, and sends a weekly review and plan every Sunday.","href":"https://meetmybot.ai/bots/running-coach","also":"https://grokbotsdirectory.com/bots/running-coach-po2Qr8","tabs":["track"],"jobs":["training"]},{"name":"Running Coach","maker":"Ivan Hybben","blurb":"An on-demand running coach that reads your Garmin watch data. After each run you get what went well, what to fix, and a recovery-gated next session as you build toward longer races like a half marathon.","href":"https://grokbotsdirectory.com/bots/running-coach-pmqGwp","also":"https://botshelf.dev/templates/29f8c3b826f1/","tabs":["track"],"jobs":["training"]},{"name":"Running Coach","maker":"Brendan Jarvis","blurb":"A personal running coach that builds your weekly training plan around your goal race, your schedule and your other training, then adapts it from your real runs. It can connect to Strava to pick up runs automatically, and keeps you going with records, streaks, weekly challenges and a monthly recap.","href":"https://grokbotsdirectory.com/bots/running-coach-5Xn7ep","tabs":["track"],"jobs":["training"]},{"name":"Fitness Coach","maker":"Hector Diaz","blurb":"A marathon coach for a goal race while keeping strength and physique. It uses Strava as training truth, builds Garmin-ready plans via Intervals.icu, and watches World Majors registration.","href":"https://botshelf.dev/templates/1fb6ca607059/","tabs":["track"],"jobs":["training"]},{"name":"Hybrid Half Trainer","maker":"Abhinav Chinnusamy","blurb":"A hybrid half-marathon coach that starts by asking about your race, schedule, and gym, then builds easy mileage, one hard day, and two lifts around your life.","href":"https://grokbotsdirectory.com/bots/hybrid-half-trainer-K52Dxp","also":"https://botshelf.dev/templates/b93316abbabe/","tabs":["track"],"jobs":["training"]},{"name":"Strength & Conditioning Coach","maker":"Raphael","blurb":"An evidence-based gym coach for sprinters. It writes strength, power, and plyometric programmes and technique cues that fit around your track sessions.","href":"https://grokbotsdirectory.com/bots/strength-conditioning-coach-5wEbOp","tabs":["track","allsports"],"jobs":["training"]},{"name":"Golfy","maker":"@SDAI_7","blurb":"A golf coach for mid-handicap players: tap-to-answer round reviews, finds where you lose strokes, and gives timed practice plans and pre-tournament briefs.","href":"https://meetmybot.ai/bots/golfy","tabs":["golf"],"jobs":["training","practice"]},{"name":"Golf Caddie","maker":"Brantley","blurb":"Pocket golf caddie for weekend players: pre-round weather and bag prep, on-course photo club advice, and post-round scorecard notes. Calm and direct—no swing lectures.","href":"https://grokbotsdirectory.com/bots/golf-caddie-4pmYdp","also":"https://builder.grokbot.rocks/bot/HAJavif4ssNOQku9JQsp-/","tabs":["golf"],"jobs":["training"]},{"name":"Junior Golf Coach","maker":"Kevin McDonald","blurb":"Helps parents and coaches of junior golfers with lesson plans, fun skill games, tournament dates, and age-appropriate tips on swing videos.","href":"https://meetmybot.ai/bots/junior-golf-coach","also":"https://botshelf.dev/templates/c26afb72197f/","tabs":["golf"],"jobs":["practice","training"]},{"name":"League & Scramble Organizer","maker":"Kevin McDonald","blurb":"Runs sign-ups, team pairings, formats, scoring, and side games for club golf leagues or charity scrambles.","href":"https://meetmybot.ai/bots/league-scramble-organizer","also":"https://botshelf.dev/templates/55afeafef3db/","tabs":["golf"],"jobs":["team"]},{"name":"Rules & Etiquette Ref","maker":"Kevin McDonald","blurb":"Answers golf rules questions in plain language, like lost balls, unplayable lies, and drops, and teaches basic etiquette to new golfers.","href":"https://meetmybot.ai/bots/rules-etiquette-ref","also":"https://botshelf.dev/templates/8ccfcda67cb1/","tabs":["golf"],"jobs":["rules"]},{"name":"Golf Fitness & Mobility Coach","maker":"Kevin McDonald","blurb":"Short stretching and strength routines for golfers, focused on better rotation, a healthier back, and a quick pre-round warm-up. Not medical advice.","href":"https://meetmybot.ai/bots/golf-fitness-mobility-coach","also":"https://botshelf.dev/templates/49c067f8a0f8/","tabs":["golf"],"jobs":["training"]},{"name":"Hoop Homework","maker":"Seth","blurb":"At-home basketball practice cards for parents. Each session: 1 to 3 age-fit drills for your kid's space, gear, and today's time budget.","href":"https://grokbotsdirectory.com/bots/hoop-homework-EpLKo8","also":"https://botshelf.dev/templates/f9cff4019268/","tabs":["basketball"],"jobs":["practice"]},{"name":"Fantasy Hoops GM","maker":"Jack Smith","blurb":"A fantasy basketball GM that gives start/sit, waiver, streaming, trade, and draft advice tailored to your league and roster.","href":"https://grokbotsdirectory.com/bots/fantasy-hoops-gm-3K6wKp","also":"https://botshelf.dev/templates/f1929e235ad8/","tabs":["basketball","betfant"],"jobs":["fantasy"]},{"name":"Baseball Score Alerts","maker":"@SouthernLvg","blurb":"Get MLB score alerts that often beat the TV: pings at the 4th inning, on every run, and at the final, plus a morning schedule with start times and channels.","href":"https://grokbotsdirectory.com/bots/baseball-score-alerts-5wzBl3","also":"https://botshelf.dev/templates/d22120a603ce/","tabs":["baseball"],"jobs":["alerts"]},{"name":"Val Volly","maker":"Jevon Washington","blurb":"Kids' volleyball schedule agent. Tracks practices, games, tournaments, and logistics; puts them on the family Google Calendar; sends reminders and digests; reports urgent changes.","href":"https://botshelf.dev/templates/8ef328028bf4/","tabs":["volleyball"],"jobs":["team"]},{"name":"FPL Gaffer","maker":"ISSAH ABUBAKARI","blurb":"A cheeky gaffer that runs your Fantasy Premier League team: deadline reminders, injury news, and sourced transfer, captain and chip advice, making changes only after your yes.","href":"https://meetmybot.ai/bots/fpl-gaffer","also":"https://grokbotsdirectory.com/bots/fpl-gaffer-3kqbz8","tabs":["soccer","betfant"],"jobs":["fantasy"]},{"name":"The Gaffer","maker":"Sai Girish","blurb":"Your Fantasy Premier League assistant manager. It makes transfer, captain and bench calls, sends deadline-day briefs, flags injury and price news on your players, scouts FPL X accounts, and tracks your mini-league.","href":"https://grokbotsdirectory.com/bots/the-gaffer-3Z4Qq8","tabs":["soccer","betfant"],"jobs":["fantasy"]},{"name":"Pickleball Coach","maker":"VibrantLife","blurb":"A personal pickleball coach that diagnoses problems, gives drills, and tracks your progress. For beginners through intermediate players.","href":"https://grokbotsdirectory.com/bots/pickleball-coach-by-vibrantlife-pz6Pap","also":"https://botshelf.dev/templates/cce35b905490/","tabs":["pickleball"],"jobs":["training","practice"]},{"name":"Bench Coach","maker":"Daniel Wilson","blurb":"A fantasy coach for Yahoo Fantasy leagues in football, basketball, baseball, and hockey, with lineup, injury, waiver, and trade calls based on each league's own scoring. It drafts every move for your OK by default, and trades always need your yes. Fantasy data provided by Yahoo Fantasy. Not affiliated with or endorsed by Yahoo.","href":"https://grokbotsdirectory.com/bots/bench-coach-3qlrmp","also":"https://botshelf.dev/templates/97134f622ca3/","tabs":["football","basketball","baseball","hockey","betfant"],"jobs":["fantasy"]},{"name":"Fantasy Manager","maker":"Dominic Bryant","blurb":"All-sports fantasy coach for drafts, weekly reports, and season management. Pick NFL, NHL, NBA, MLB, or more — then draft in real time or manage an existing roster.","href":"https://botshelf.dev/templates/82a9f2277e04/","also":"https://www.grokbotwiki.com/bots/fantasy-manager","tabs":["football","basketball","baseball","hockey","betfant"],"jobs":["fantasy"]},{"name":"NFR Team Coach","maker":"TRC Coaching Co","blurb":"Pro Fantasy Rodeo NFR advisor for the Chasing Gold and Daily Games, Dec 3–12, 2026. Advisory only; 18+, play responsibly.","tabs":["rodeo","betfant"],"jobs":["fantasy"],"trc":true,"newFromTrc":true,"linkSoon":true},{"name":"Football Bets Advisor","maker":"Clay Ferguson / TRC Coaching Co","blurb":"Clay's process-first NFL and college football picks bot. It builds short PLAY / CUT / PASS cards with hard kill rules.","href":"https://x.ai/bot/KXYmjQTxwCHQaRGh8CCDS","tabs":["football","betfant"],"jobs":["betting"],"trc":true},{"name":"Football Bets Advisor","maker":"John Atkinson III","blurb":"A process-first NFL and college football picks bot. It builds short PLAY / CUT / PASS cards with hard kill rules, unit sizing, line shopping, and closing-line-value tracking. It never places bets. Picks are AI opinions for entertainment and education only.","href":"https://grokbotsdirectory.com/bots/football-bets-advisor-5XnjQp","also":"https://botshelf.dev/templates/1afcb1e51381/","tabs":["football","betfant"],"jobs":["betting"]},{"name":"Betting Desk","maker":"STU","blurb":"A disciplined sports-betting analyst for MLB, NFL, NBA, and college football. It builds thin safest cards with hard bans, evidence-backed props, and daily digests.","href":"https://grokbotsdirectory.com/bots/betting-desk-5Ra4B3","tabs":["football","basketball","baseball","betfant"],"jobs":["betting"]},{"name":"Edge Hunter","maker":"Anthony Diguilio","blurb":"Finds NFL betting edges each week by matching scheme against scheme, defense first, then checks the read against the market. It sends a ranked list of plays with why each hits, why it might not, and stays quiet when nothing clears the bar.","href":"https://grokbotsdirectory.com/bots/edge-hunter-pQanPp","tabs":["football","betfant"],"jobs":["betting"]},{"name":"Football Betting Scout","maker":"GenXRP 45","blurb":"Watches NFL and college football lines for advantageous moves and builds DraftKings lineup and parlay ideas. It never places bets or logs in to DraftKings.","href":"https://grokbotsdirectory.com/bots/football-betting-scout-3kqDo8","tabs":["football","betfant"],"jobs":["betting"]},{"name":"Sports bet prophet","maker":"BackWoods","blurb":"Researches disciplined 2-leg sports doubles (about +100 to +180) with kill switches and pass rules. You place the bets on your phone; it shops public odds and skips unclean boards.","href":"https://botshelf.dev/templates/d830d7ed6d98/","tabs":["betfant"],"jobs":["betting"]},{"name":"Shawn","maker":"Badger Bets","blurb":"A paper-first sports betting research desk. You bring the board in; it returns an auditable CLV/EV card. It never places bets.","href":"https://botshelf.dev/templates/c2ba62ed8e97/","tabs":["betfant"],"jobs":["betting"]},{"name":"Pal","maker":"Badger Bets","blurb":"An MLB matchup scout. It surfaces today's best hitter PASS spots and pitcher K spots from BallparkPal projections, with pitch-type checks. Short boards only; it never places bets.","href":"https://botshelf.dev/templates/410e3d3e6328/","tabs":["baseball","betfant"],"jobs":["betting"]},{"name":"Bettoredge Value Finder","maker":"TemplatesGrokBot","blurb":"Scans BettorEdge markets for +EV opportunities, ranks them by edge, confidence, and liquidity, and sizes stakes with fractional Kelly. Any actual bet placement requires your confirmation.","href":"https://templatesgrokbot.com/bot/bettoredge-value-finder/","tabs":["betfant"],"jobs":["betting"]},{"name":"Sideline Brain","maker":"TRC Coaching Co","blurb":"An iPad play-logging and tendency app with fourth-down go/no-go calls. In development from TRC Coaching Co. No public link or price yet.","tabs":["football","soon"],"jobs":["play"],"trc":true,"comingSoon":true},{"name":"Command Center","maker":"TRC Coaching Co","blurb":"A Command Center package for coaches, coming soon from TRC Coaching Co. No public link or price yet.","tabs":["allsports","soon"],"jobs":["team"],"trc":true,"comingSoon":true}];
+
+    let query = "";
+    let cat = "all";
+
+    function inFilter(bot, c) {
+      if (c === "all") return true;
+      return bot.tabs.indexOf(c) !== -1;
+    }
+    function jobBadges(bot) {
+      const labels = [];
+      for (const job of bot.jobs) {
+        const label = JOB_LABEL[job];
+        if (labels.indexOf(label) === -1) labels.push(label);
+      }
+      return labels;
+    }
+    function isClayFba(bot) {
+      return !!bot.trc && bot.jobs.indexOf("betting") !== -1 && bot.name === "Football Bets Advisor";
+    }
+    function matches(bot, q, c) {
+      if (!inFilter(bot, c)) return false;
+      const s = q.trim().toLowerCase();
+      if (!s) return true;
+      const hay = [bot.name, bot.maker, bot.blurb, ...jobBadges(bot), ...bot.tabs.map((t) => TAB_LABEL[t])].join(" ").toLowerCase();
+      return hay.includes(s);
+    }
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+    function badge(text, color) {
+      return `<span class="badge" style="color:${color};border:1px solid ${color}">${escapeHtml(text)}</span>`;
+    }
+    function cardHtml(bot) {
+      const featured = !!bot.featured;
+      const badges = [];
+      if (featured) badges.push(badge("Featured", "#C41E24"));
+      if (bot.newFromTrc) badges.push(badge("New from TRC", "#C41E24"));
+      else if (bot.trc) badges.push(badge("TRC Coaching Co", "#C41E24"));
+      if (bot.comingSoon) badges.push(badge("Coming soon", "#B0B0B0"));
+      for (const text of jobBadges(bot)) badges.push(badge(text, "#B0B0B0"));
+      let action = "";
+      if (bot.href) {
+        action = `<div class="actions"><a class="get-bot" href="${escapeHtml(bot.href)}" target="_blank" rel="noopener noreferrer">Get this bot</a>`;
+        if (bot.also) {
+          action += `<a class="also" href="${escapeHtml(bot.also)}" target="_blank" rel="noopener noreferrer">Also listed here</a>`;
+        }
+        action += `</div>`;
+      } else {
+        const msg = bot.linkSoon ? "Link coming soon." : bot.comingSoon ? "No public link yet." : "No public share listing found.";
+        action = `<p class="nolink">${msg}</p>`;
+      }
+      return `<article class="bot-card${featured ? " featured" : ""}">
+        <div class="badges">${badges.join("")}</div>
+        <div>
+          <h3>${escapeHtml(bot.name)}</h3>
+          <p class="maker">by ${escapeHtml(bot.maker)}</p>
+        </div>
+        <p class="blurb">${escapeHtml(bot.blurb)}</p>
+        ${action}
+      </article>`;
+    }
+
+    const visibleTabs = TAB_DEFS.filter((item) => {
+      if (item.id === "all") return true;
+      return BOTS.some((b) => inFilter(b, item.id));
+    });
+
+    const tabsEl = document.getElementById("tabs");
+    visibleTabs.forEach((item) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "chip";
+      btn.setAttribute("role", "tab");
+      btn.dataset.id = item.id;
+      btn.textContent = item.label;
+      btn.addEventListener("click", () => { cat = item.id; render(); });
+      tabsEl.appendChild(btn);
+    });
+
+    document.getElementById("search").addEventListener("input", (e) => {
+      query = e.target.value;
+      render();
+    });
+
+    function render() {
+      tabsEl.querySelectorAll(".chip").forEach((btn) => {
+        btn.setAttribute("aria-selected", btn.dataset.id === cat ? "true" : "false");
+      });
+      const shown = BOTS.filter((b) => matches(b, query, cat)).sort((a, b) => {
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        if (cat === "betfant") {
+          const aLead = isClayFba(a);
+          const bLead = isClayFba(b);
+          if (aLead && !bLead) return -1;
+          if (!aLead && bLead) return 1;
+        }
+        if (a.comingSoon && !b.comingSoon) return 1;
+        if (!a.comingSoon && b.comingSoon) return -1;
+        return a.name.localeCompare(b.name);
+      });
+      const live = shown.filter((b) => !b.comingSoon);
+      const soon = shown.filter((b) => b.comingSoon);
+      const showBettingNote =
+        cat === "betfant" || shown.some((b) => b.jobs.indexOf("betting") !== -1 || b.tabs.indexOf("betfant") !== -1);
+      document.getElementById("betting-note").hidden = !showBettingNote;
+      const q = query.trim();
+      let count = shown.length === 0 ? "No bots match that search." : shown.length === 1 ? "1 bot" : shown.length + " bots";
+      if (q) count += " matching \u201c" + q + "\u201d";
+      if (cat !== "all") count += " in " + TAB_LABEL[cat];
+      count += ".";
+      document.getElementById("count").textContent = count;
+      document.getElementById("live-grid").innerHTML = live.map(cardHtml).join("");
+      const soonSec = document.getElementById("soon-section");
+      soonSec.hidden = soon.length === 0;
+      document.getElementById("soon-grid").innerHTML = soon.map(cardHtml).join("");
+    }
+    render();
+  </script>
+</body>
+</html>
